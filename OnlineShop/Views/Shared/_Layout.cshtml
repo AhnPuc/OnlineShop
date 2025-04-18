@@ -1,0 +1,376 @@
+﻿@inject OnlineShop.Models.Db.OnlineShopContext _context
+
+@{
+    var MySttings = _context.Settings.FirstOrDefault();
+}
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewData["Title"] – @MySttings.Title </title>
+    <meta name="description" content="Uthr Fashion eCommerce Bootstrap 5 Template is an innovative and modern e-commerce online store website template." />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="profile" href="https://gmpg.org/xfn/11">
+    <link rel="canonical" href="Replace_with_your_PAGE_URL" />
+
+    <!-- Open Graph (OG) meta tags are snippets of code that control how URLs are displayed when shared on social media  -->
+    <!-- <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Uthr – Fashion eCommerce HTML Template" />
+    <meta property="og:url" content="PAGE_URL" />
+    <meta property="og:site_name" content="SITE_NAME" /> -->
+    <!-- For the og:image content, replace the # with a link of an image -->
+    <!-- <meta property="og:image" content="#" />
+    <meta property="og:description"
+        content="240+ Best Bootstrap Templates are available on this website. Find your template for your project compatible with the most popular HTML library in the world." /> -->
+
+    <!-- Add site Favicon -->
+    <link rel="icon" href="https://hasthemes.com/wp-content/uploads/2019/04/cropped-favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" href="https://hasthemes.com/wp-content/uploads/2019/04/cropped-favicon-192x192.png"
+        sizes="192x192" />
+    <link rel="apple-touch-icon" href="https://hasthemes.com/wp-content/uploads/2019/04/cropped-favicon-180x180.png" />
+    <meta name="msapplication-TileImage"
+        content="https://hasthemes.com/wp-content/uploads/2019/04/cropped-favicon-270x270.png" />
+
+    <!-- CSS
+    ========================= -->
+    <link rel="stylesheet" href="/assets/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/slick.css">
+    <link rel="stylesheet" href="/assets/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/assets/css/ionicons.min.css">
+    <link rel="stylesheet" href="/assets/css/font.awesome.css">
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!--modernizr min js here-->
+    <script src="/assets/js/vendor/modernizr-3.7.1.min.js"></script>
+
+
+    <!-- Structured Data  -->
+
+</head>
+
+<body>
+
+    <!--offcanvas menu area start-->
+    <div class="body_overlay">
+
+    </div>
+    <div class="offcanvas_menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="offcanvas_menu_wrapper">
+                        <div class="canvas_close">
+                            <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
+                        </div>
+                        <div class="header_contact_info">
+                            <ul class="d-flex">
+                                <li class="text-white"> <i class="icons icon-phone"></i> 
+                                    <a href="tel:@MySttings.Phone">
+                                        @MySttings.Phone
+                                    </a>
+                                </li>
+                                <li class="text-white"> <i class="icon-envelope-letter icons"></i> <a href="#">@MySttings.Email</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="header_social d-flex">
+                            <span>Follow us</span>
+                            <ul class="d-flex">
+                                <li><a href="@MySttings.Twitter"><i class="icon-social-twitter icons"></i></a></li>
+                                <li><a href="@MySttings.FaceBook"><i class="icon-social-facebook icons"></i></a></li>
+                                <li><a href="@MySttings.Instagram"><i class="icon-social-instagram icons"></i></a></li>
+                                <li><a href="@MySttings.Youtube"><i class="icon-social-youtube icons"></i></a></li>
+                                
+                            </ul>
+                        </div>
+                        <div class="language_currency">
+                            
+                        </div>
+                        <div id="menu" class="text-left ">
+                            <ul class="offcanvas_main_menu">
+                                @{
+                                    var top_menus = _context.Menus.Where(row => row.Type == "Top").ToList();
+                                }
+                                @foreach (var menus_row in top_menus) {
+                                    <li>
+                                        <a href="@menus_row.Link">@menus_row.MenuTitle</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--offcanvas menu area end-->
+    <!--mini cart-->
+    <div class="mini_cart">
+       
+    </div>
+    <!--mini cart end-->
+    <!--header area start-->
+    <header class="header_section header_transparent">
+        
+
+        <div class="main_header" style="padding-top: 5px">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="header_container d-flex justify-content-between align-items-center">
+                            <div class="canvas_open">
+                                <a href="javascript:void(0)"><i class="ion-navicon"></i></a>
+                            </div>
+                            <div class="header_logo">
+                                <a class="sticky_none" href="/"><img src="/images/@MySttings.Logo" alt="@MySttings.Title"></a>
+                            </div>
+                            <!--main menu start-->
+                            <div class="main_menu d-none d-lg-block">
+                                <nav>
+                                    <ul class="d-flex">
+                                        @foreach (var menus_row in top_menus)
+                                        {
+                                            <li>
+                                                <a href="@menus_row.Link">@menus_row.MenuTitle</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div class="header_account">
+                                <ul class="d-flex">
+                                    <li class="header_search"><a href="#"><i class="icon-magnifier icons"></i></a></li>
+                                    <li class="account_link"><a href="#"><i class="icon-user icons @(User.Identity.IsAuthenticated?"text-danger":"")"></i></a>
+                                        <ul class="dropdown_account_link">
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <li><a href="/User">My Account</a></li>
+                                                <li><a href="/User/Orders">Order List</a></li>
+                                                <li><a href="/Account/Logout">Logout</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a href="/Account/Login">Login</a></li>
+                                                <li><a href="/Account/Register">Register</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                    
+                                    <li class="shopping_cart"><a href="#"><i class="icon-basket-loaded icons"></i></a>
+                                        <span class="item_count">0</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- page search box -->
+        <div class="page_search_box">
+            <div class="search_close">
+                <i class="ion-close-round"></i>
+            </div>
+            <form class="border-bottom" action="/products/SearchProducts">
+                <input class="border-0" placeholder="Search products..." type="text" name="SearchText">
+                <button type="submit"><span class="icon-magnifier icons"></span></button>
+            </form>
+        </div>
+
+    </header>
+    <!--header area end-->
+    @RenderBody()
+
+    <!--slider area start-->
+    
+    <!--slider area end-->
+
+    <!--shipping section start-->
+    
+    <!--shipping section end-->
+
+    <!-- banner section start -->
+    
+    <!-- banner section end -->
+
+    <!-- product section start -->
+    
+    <!-- product section end -->
+
+    <!-- banner section start -->
+    
+    <!-- banner section end -->
+
+    <!-- product section start -->
+    
+    <!-- product section end -->
+
+    <!-- blog section start -->
+    
+    <!-- blog section end -->
+
+    <!-- instagram section start -->
+    
+    <!-- instagram section end -->
+
+
+    <!--newsletter section start-->
+    
+    <!--newsletter section end-->
+
+    <!--footer area start-->
+    <footer class="footer_widgets">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-5">
+                    <div class="footer_widget_list">
+                        <div class="footer_logo">
+                            <a href="/"><img src="/images/@MySttings.Logo" alt="@MySttings.Title"></a>
+                        </div>
+                        <div class="footer_contact">
+                            <div class="footer_contact_list">
+                                <span>Our Location</span>
+                                <p>@MySttings.Address</p>
+                            </div>
+                            <div class="footer_contact_list">
+                                <span>24/7 hotline:</span>
+                                <a href="tel:@MySttings.Phone">@MySttings.Phone</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-7">
+                    <div class="footer_widget_list text-right">
+                        <div class="footer_menu">
+                            <ul class="d-flex justify-content-end">
+                                @{
+                                    var bottom_menus = _context.Menus.Where(row => row.Type == "Bottom").ToList();
+                                }
+                                @foreach (var menus_row in bottom_menus)
+                                {
+                                    <li>
+                                        <a href="@menus_row.Link">@menus_row.MenuTitle</a>
+                                    </li>
+                                }
+                                @* <li><a href="index.html">home</a></li>
+                                <li><a href="shop.html">Shop</a></li>
+                                <li><a href="product-details.html">Product</a></li>
+                                <li><a href="#">pages</a></li>
+                                <li><a href="blog.html">Blog</a></li> *@
+                            </ul>
+                        </div>
+                        <div class="footer_social">
+                            <ul class="d-flex justify-content-end">
+                                <li><a href="" data-tippy="Twitter" data-tippy-inertia="true"
+                                        data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top"><i
+                                            class="ion-social-twitter"></i></a></li>
+                                <li><a href="" data-tippy="Facebook" data-tippy-inertia="true"
+                                        data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top"><i
+                                            class="ion-social-facebook"></i></a></li>
+                                <li><a href="" data-tippy="googleplus" data-tippy-inertia="true"
+                                        data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top"><i
+                                            class="ion-social-googleplus-outline"></i></a></li>
+                                <li><a href="" data-tippy="Instagram" data-tippy-inertia="true"
+                                        data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top"><i
+                                            class="ion-social-instagram-outline"></i></a></li>
+                                <li><a href="" data-tippy="Youtube" data-tippy-inertia="true"
+                                        data-tippy-delay="50" data-tippy-arrow="true" data-tippy-placement="top"><i
+                                            class="ion-social-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="copyright_right">
+                            <p>©2021 <span>Uthr</span>. made with <i class="ion-heart"></i>  by <a href="https://hasthemes.com" target="_blank">HasThemes</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--footer area end-->
+
+    <!-- modal area start-->
+    
+    <!-- modal area end-->
+
+
+    <!-- JS
+============================================ -->
+
+    <script src="/assets/js/vendor/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/vendor/popper.js"></script>
+    <script src="/assets/js/vendor/bootstrap.min.js"></script>
+    <script src="/assets/js/slick.min.js"></script>
+    <script src="/assets/js/wow.min.js"></script>
+    <script src="/assets/js/jquery.scrollup.min.js"></script>
+    <script src="/assets/js/images-loaded.min.js"></script>
+    <script src="/assets/js/isotope.pkgd.min.js"></script>
+    <script src="/assets/js/jquery.nice-select.js"></script>
+    <script src="/assets/js/tippy-bundle.umd.js"></script>
+    <script src="/assets/js/jquery-ui.min.js"></script>
+    <script src="/assets/js/jquery.instagramFeed.min.js"></script>
+    <script src="/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="/assets/js/mailchimp-ajax.js"></script>
+
+    <!-- Main JS -->
+    <script src="/assets/js/main.js"></script>
+    <script>
+        function updateCart(productId, count)
+        {
+            $.ajax({
+                url: '/Cart/UpdateCart',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ productId: productId, count: count}),
+                success: function (result) 
+                {
+                    $(".item_count").html(result);
+                    if (count == 0) 
+                    {
+                        $("#" + productId).remove();
+                    }
+                    getMiniCart();
+                },
+                error: function() 
+                {
+                    alert('Error product not found or QTY is not enough!');
+                }
+            });
+        }
+
+        function getMiniCart() 
+        {
+            $.ajax({
+                url: '/Cart/SmallCart',
+                type: 'GET',
+                success: function (result)
+                {
+                    $(".mini_cart").html(result);
+                },
+                error: function()
+                {
+                    alert('Error fetching mini cart');
+                }
+            });
+        }
+
+        $(document).ready(function()
+        {
+            getMiniCart();
+            $(".slick-slide").click(function () {
+                $(".slick-track").css("transform", "");
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>
