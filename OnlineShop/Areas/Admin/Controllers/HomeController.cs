@@ -7,9 +7,9 @@ namespace OnlineShop.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index()        // Trang chủ Admin
         {
-            return View();
+            return View();      // Trang chủ Admin
         }
     }
 }

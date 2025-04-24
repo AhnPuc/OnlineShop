@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Models.Db;
 
@@ -22,15 +17,15 @@ namespace OnlineShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Users
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()        // Danh sách người dùng
         {
-            return View(await _context.Users.ToListAsync());
+            return View(await _context.Users.ToListAsync());        // Danh sách tất cả người dùng
         }
 
         // GET: Admin/Users/Create
-        public IActionResult Create()
+        public IActionResult Create()       // Tạo mới người dùng
         {
-            return View();
+            return View();      // Tạo mới người dùng
         }
 
         // POST: Admin/Users/Create
@@ -38,31 +33,31 @@ namespace OnlineShop.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,FullName,Password,IsAdmin,RegisterDate,RecoveryCode")] OnlineShop.Models.Db.User user)
+        public async Task<IActionResult> Create([Bind("Id,Email,FullName,Password,IsAdmin,RegisterDate,RecoveryCode")] OnlineShop.Models.Db.User user)      // Tạo mới người dùng
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid)     // Kiểm tra tính hợp lệ của dữ liệu
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _context.Add(user);     // Thêm người dùng vào cơ sở dữ liệu
+                await _context.SaveChangesAsync();      // Lưu thay đổi
+                return RedirectToAction(nameof(Index));         // Quay lại danh sách người dùng
             }
             return View(user);
         }
 
         // GET: Admin/Users/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)      // Chỉnh sửa người dùng
         {
-            if (id == null)
+            if (id == null)     // Kiểm tra xem ID có null không
             {
-                return NotFound();
+                return NotFound();      // Nếu null thì trả về NotFound
             }
 
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var user = await _context.Users.FindAsync(id);          // Tìm người dùng theo ID
+            if (user == null)           // Nếu không tìm thấy người dùng
             {
-                return NotFound();
+                return NotFound();          // Nếu không tìm thấy người dùng
             }
-            return View(user);
+            return View(user);          // Trả về view chỉnh sửa người dùng
         }
 
         // POST: Admin/Users/Edit/5
@@ -70,72 +65,72 @@ namespace OnlineShop.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,FullName,Password,IsAdmin,RegisterDate,RecoveryCode")] OnlineShop.Models.Db.User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,FullName,Password,IsAdmin,RegisterDate,RecoveryCode")] OnlineShop.Models.Db.User user)            // Chỉnh sửa người dùng
         {
-            if (id != user.Id)
+            if (id != user.Id)          // Kiểm tra xem ID có khớp không
             {
-                return NotFound();
+                return NotFound();      // Nếu không khớp thì trả về NotFound
             }
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid)     // Kiểm tra tính hợp lệ của dữ liệu
             {
                 try
                 {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    _context.Update(user);          // Cập nhật người dùng
+                    await _context.SaveChangesAsync();          // Lưu thay đổi
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException)            // Kiểm tra xem có lỗi không
                 {
-                    if (!UserExists(user.Id))
+                    if (!UserExists(user.Id))           // Kiểm tra xem người dùng có tồn tại không
                     {
-                        return NotFound();
+                        return NotFound();          // Nếu không tồn tại thì trả về NotFound
                     }
                     else
                     {
-                        throw;
+                        throw;          // Ném lỗi ra ngoài
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));         // Quay lại danh sách người dùng
             }
-            return View(user);
+            return View(user);              // Nếu không hợp lệ, quay lại trang chỉnh sửa người dùng
         }
 
         // GET: Admin/Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)            // Xóa người dùng
         {
-            if (id == null)
+            if (id == null)             // Kiểm tra xem ID có null không
             {
-                return NotFound();
+                return NotFound();          // Nếu null thì trả về NotFound
             }
 
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            var user = await _context.Users     
+                .FirstOrDefaultAsync(m => m.Id == id);          // Tìm người dùng theo ID
+            if (user == null)           // Nếu không tìm thấy người dùng
             {
-                return NotFound();
+                return NotFound();          // Nếu không tìm thấy người dùng
             }
 
-            return View(user);
+            return View(user);          // Trả về view xóa người dùng
         }
 
         // POST: Admin/Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)            // Xóa người dùng
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user != null)
+            var user = await _context.Users.FindAsync(id);          // Tìm người dùng theo ID
+            if (user != null)           // Nếu tìm thấy người dùng
             {
-                _context.Users.Remove(user);
+                _context.Users.Remove(user);            // Xóa người dùng khỏi cơ sở dữ liệu
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            await _context.SaveChangesAsync();          // Lưu thay đổi
+            return RedirectToAction(nameof(Index));         // Quay lại danh sách người dùng
         }
 
-        private bool UserExists(int id)
-        {
-            return _context.Users.Any(e => e.Id == id);
+        private bool UserExists(int id)         // Kiểm tra xem người dùng có tồn tại không
+        {   
+            return _context.Users.Any(e => e.Id == id);         // Kiểm tra xem có người dùng nào có ID giống với ID truyền vào không
         }
 
         

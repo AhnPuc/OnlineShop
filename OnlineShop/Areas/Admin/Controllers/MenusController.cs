@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineShop.Models.Db;
 
@@ -22,16 +17,16 @@ namespace OnlineShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Menus
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()        // Danh sách menu
         {
-            return View(await _context.Menus.ToListAsync());
+            return View(await _context.Menus.ToListAsync());        // Danh sách tất cả các menu
         }
 
 
         // GET: Admin/Menus/Create
-        public IActionResult Create()
+        public IActionResult Create()       // Tạo mới menu
         {
-            return View();
+            return View();      // Tạo mới menu
         }
 
         // POST: Admin/Menus/Create
@@ -39,31 +34,31 @@ namespace OnlineShop.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MenuTitle,Link,Type")] Menu menu)
+        public async Task<IActionResult> Create([Bind("Id,MenuTitle,Link,Type")] Menu menu)     // Tạo mới menu
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid)     // Kiểm tra tính hợp lệ của dữ liệu
             {
-                _context.Add(menu);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _context.Add(menu);     // Thêm menu vào cơ sở dữ liệu
+                await _context.SaveChangesAsync();      // Lưu thay đổi
+                return RedirectToAction(nameof(Index));     // Quay lại danh sách menu
             }
-            return View(menu);
+            return View(menu);      // Nếu không hợp lệ, quay lại trang tạo menu
         }
 
         // GET: Admin/Menus/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)      // Chỉnh sửa menu
         {
-            if (id == null)
+            if (id == null)     // Kiểm tra xe ID có null không
             {
-                return NotFound();
+                return NotFound();      // Nếu null thì trả về NotFound
             }
 
-            var menu = await _context.Menus.FindAsync(id);
-            if (menu == null)
+            var menu = await _context.Menus.FindAsync(id);      // Tìm menu theo ID
+            if (menu == null)       // Nếu không tìm thấy menu
             {
-                return NotFound();
+                return NotFound();      // Nếu không tìm thấy menu
             }
-            return View(menu);
+            return View(menu);      // Trả về view chỉnh sửa menu
         }
 
         // POST: Admin/Menus/Edit/5
@@ -71,72 +66,72 @@ namespace OnlineShop.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,MenuTitle,Link,Type")] Menu menu)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,MenuTitle,Link,Type")] Menu menu)       // Chỉnh sửa menu
         {
-            if (id != menu.Id)
+            if (id != menu.Id)      // Kiểm tra xe ID có khớp với ID của menu không
             {
-                return NotFound();
+                return NotFound();      // Nếu không khớp thì trả về NotFound
             }
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid)     // Kiểm tra tính hợp lệ của dữ liệu
             {
                 try
                 {
-                    _context.Update(menu);
-                    await _context.SaveChangesAsync();
+                    _context.Update(menu);      // Cập nhật menu vào cơ sở dữ liệu
+                    await _context.SaveChangesAsync();      // Lưu thay đổi
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException)        // Kiểm tra xem có lỗi không
                 {
-                    if (!MenuExists(menu.Id))
+                    if (!MenuExists(menu.Id))       // Kiểm tra xem menu có tồn tại không
                     {
-                        return NotFound();
+                        return NotFound();      // Nếu không tồn tại thì trả về NotFound
                     }
                     else
                     {
-                        throw;
-                    }
+                        throw;      // Ném lỗi ra ngoài
+                    }   
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));     // Quay lại danh sách menu
             }
-            return View(menu);
+            return View(menu);      // Nếu không hợp lệ, quay lại trang chỉnh sửa menu
         }
 
         // GET: Admin/Menus/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)        // Xóa menu
         {
-            if (id == null)
+            if (id == null)     // Kiểm tra xem ID có null không
             {
-                return NotFound();
+                return NotFound();      // Nếu null thì trả về NotFound
             }
 
-            var menu = await _context.Menus
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (menu == null)
+            var menu = await _context.Menus     // Tìm menu theo ID
+                .FirstOrDefaultAsync(m => m.Id == id);      // Lấy menu đầu tiên
+            if (menu == null)       // Nếu không tìm thấy menu
             {
-                return NotFound();
+                return NotFound();      // Nếu không tìm thấy menu
             }
 
-            return View(menu);
+            return View(menu);          // Trả về view xóa menu
         }
 
         // POST: Admin/Menus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)        // Xóa menu
         {
-            var menu = await _context.Menus.FindAsync(id);
-            if (menu != null)
+            var menu = await _context.Menus.FindAsync(id);      //  Tìm menu theo ID
+            if (menu != null)       // Nếu tìm thấy menu
             {
-                _context.Menus.Remove(menu);
+                _context.Menus.Remove(menu);        // Xóa menu khỏi cơ sở dữ liệu
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            await _context.SaveChangesAsync();      // Lưu thay đổi
+            return RedirectToAction(nameof(Index));     // Quay lại danh sách menu
         }
 
-        private bool MenuExists(int id)
+        private bool MenuExists(int id)     // Kiểm tra xem menu có tồn tại không
         {
-            return _context.Menus.Any(e => e.Id == id);
+            return _context.Menus.Any(e => e.Id == id);     // Kiểm tra xem có menu nào có ID giống với ID truyền vào không
         }
     }
 }
